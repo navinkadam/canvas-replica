@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.left {
+  flex: 1;
+  /* height: 650px; */
+  background-color: cadetblue;
+  flex-direction: row;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-evenly;
+}
+.left > .content {
+  height: 130px;
+  width: 200px;
+  margin: 10px;
+}
+.left > .content > img {
+  height: 130px;
+  width: 200px;
+}
+.right {
+  flex: 3.3;
+  /* height: 650px; */
+  background-color: #396986c4;
+  align-content: center;
+}
+
+.canvas {
+  border: 5px dotted #00d2ff;
+}
+
+.visibility {
+  visibility: hidden;
+}
+button {
+  margin: 5px;
+}
+.canvas-container {
+  margin: auto;
+}

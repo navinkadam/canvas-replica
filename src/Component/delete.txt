@@ -1,0 +1,245 @@
+/*
+
+this.canvas.loadFromJSON(
+  `{"version":"2.7.0","objects":[{"type":"image","version":"2.7.0","originX":"left","originY":"top","left":0,"top":0,"width":748,"height":421,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":0.67,"scaleY":0.67,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"crossOrigin":"","cropX":0,"cropY":0,"src":"http://localhost:3000/assets/image/4.jpg","filters":[]},{"type":"image","version":"2.7.0","originX":"left","originY":"top","left":194.23,"top":107.84,"width":640,"height":360,"fill":"rgb(0,0,0)","stroke":null,"strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":0.78,"scaleY":0.78,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"crossOrigin":"","cropX":0,"cropY":0,"src":"http://localhost:3000/assets/image/6.jpg","filters":[]},{"type":"textbox","version":"2.7.0","originX":"left","originY":"top","left":313.24,"top":218.04,"width":80,"height":25.42,"fill":"black","stroke":"#fff","strokeWidth":0,"strokeDashArray":null,"strokeLineCap":"butt","strokeDashOffset":0,"strokeLineJoin":"miter","strokeMiterLimit":4,"scaleX":1,"scaleY":1,"angle":0,"flipX":false,"flipY":false,"opacity":1,"shadow":null,"visible":true,"clipTo":null,"backgroundColor":"","fillRule":"nonzero","paintFirst":"fill","globalCompositeOperation":"source-over","transformMatrix":null,"skewX":0,"skewY":0,"text":"type text","fontSize":22.5,"fontWeight":"normal","fontFamily":"helvetica neue","fontStyle":"normal","lineHeight":1.16,"underline":false,"overline":false,"linethrough":false,"textAlign":"left","textBackgroundColor":"","charSpacing":0,"minWidth":20,"splitByGrapheme":false,"styles":{}}]}`,
+  this.canvas.renderAll.bind(this.canvas),
+  function(o, object) {
+    fabric.log(o, object);
+  }
+);
+
+    lineHeight: 1.16,
+    transparent: 100,
+    letterSpacing: 10,
+// import DrawText from "../DrawText/DrawText";
+// import Images from "../Image/Images";
+// import FontFamily from "../Fonts/FontFamily/FontsFamily";
+// import Input from "../Input/Input";
+// import TextAlign from "../Fonts/TextAlign/TextAlign";
+// import Download from "../Download/Download";
+// import Group from "../GroupUngroup/Group";
+// import Ungroup from "../GroupUngroup/Ungroup";
+// import MultipleSelection from "../MultipleSelection/MultipleSelection";
+// import Backward from "../Position/Backward/Backward";
+// import Forward from "../Position/Forward/Forward";
+// import RangeBarReact from "../RangeBarReact/RangeBarReact";
+
+
+<button onClick={this.onClickBold}>B</button>
+
+<div>
+<button onClick={this.onGroup}>Group</button>
+</div>
+<div>
+<button onClick={this.onUnGroup}>UnGroup</button>
+</div>
+
+<div>
+<button onClick={this.onDownloadImage}>
+download Image
+</button>
+</div>
+
+<div>
+<button onClick={this.onMultipleSelection}>
+Multiple Selection
+</button>
+</div>
+
+<div>
+<button onClick={this.drawText}>Add Text</button>
+</div>
+
+ <div>
+<button onClick={this.selectedObjectBackward}>
+Backward
+</button>
+</div>
+
+<div>
+<button onClick={this.selectedObjectForward}>
+forward
+</button>
+</div>
+
+this.canvas.setBackgroundImage(
+  this.state.selectedImg.src,
+  this.canvas.renderAll.bind(this.canvas),
+  {
+    backgroundImageOpacity: 0.5,
+    backgroundImageStretch: false,
+    width: this.canvas.width,
+    height: this.canvas.height,
+    selectable: false
+  });
+
+--------------------------------------------------------
+
+
+
+onGroup = e => {
+  if (
+    !this.canvas.getActiveObject() ||
+    this.canvas.getActiveObject().type !== "activeSelection"
+  ) {
+    return "";
+  }
+  this.canvas.getActiveObject().toGroup();
+  this.canvas.renderAll();
+};
+
+onUnGroup = e => {
+  if (!this.canvas.getActiveObject()) {
+    return;
+  }
+  if (this.canvas.getActiveObject().type !== "group") {
+    return;
+  }
+  this.canvas.getActiveObject().toActiveSelection();
+  this.canvas.renderAll();
+};
+
+onMultipleSelection = e => {
+  this.canvas.discardActiveObject();
+  var sel = new fabric.ActiveSelection(this.canvas.getObjects(), {
+    canvas: this.canvas
+  });
+  this.canvas.setActiveObject(sel);
+  this.canvas.renderAll();
+ };
+
+
+
+  drawText = () => {
+    let text = new fabric.Textbox("type text", {
+      left: 50,
+      top: 20,
+      width: 80,
+      height: 200,
+      fontFamily: "helvetica neue",
+      fill: "black",
+      stroke: "#fff",
+      fontSize: (30 * 72) / 96,
+      strokeWidth: 0
+    });
+
+    text.setControlsVisibility({
+      mt: false,
+      mb: false
+    });
+    this.canvas.add(text);
+  };
+
+  onDownloadImage = e => {
+    let a = document.createElement("a");
+    a.href = this.canvas.toDataURL({
+      format: "png",
+      quality: 1.0,
+      multiplier: 1.0
+    });
+    console.log(JSON.stringify(this.canvas.toJSON()));
+    a.download = "custom.png";
+    a.click();
+  };
+
+    selectedObjectBackward = e => {
+    if (!this.canvas.getActiveObject()) return "";
+    this.canvas.sendToBack(this.canvas.getActiveObject());
+    this.canvas.renderAll();
+  };
+
+  selectedObjectForward = e => {
+    if (!this.canvas.getActiveObject()) return "";
+    this.canvas.bringForward(this.canvas.getActiveObject());
+    this.canvas.renderAll();
+  };
+
+<Input
+  id="letterSpacing"
+  type="range"
+  value={this.state.letterSpacing}
+  onChange={this.onChangeLetterSpacing}
+  displayText="Letter Spacing"
+  rangeMin={-200}
+  rangeMax={800}
+  rangeStep={1}
+/>
+
+<Input
+id="lineHeight"
+type="range"
+value={this.state.lineHeight}
+onChange={this.onChangeLineHeight}
+displayText="Line Height"
+rangeMin={0.5}
+rangeMax={2.5}
+rangeStep={0.2}
+/>
+
+  onChangeLineHeight = e => {
+    if (this.canvas.getActiveObject()) {
+      this.setState({ lineHeight: e.target.value });
+      this.canvas.getActiveObject().set("lineHeight", e.target.value);
+      this.canvas.renderAll();
+    } else {
+      return alert("select Text");
+    }
+  };
+
+  onChangeLetterSpacing = e => {
+    if (this.canvas.getActiveObject()) {
+      this.setState({ letterSpacing: e.target.value });
+      this.canvas.getActiveObject().set("charSpacing", e.target.value);
+      this.canvas.renderAll();
+    } else {
+      return alert("select Text");
+    }
+  };
+
+    onChangeTransparent = e => {
+    if (this.canvas.getActiveObject()) {
+      this.setState({ transparent: e.target.value });
+      this.canvas
+        .getActiveObject()
+        .set("opacity", String(e.target.value * 0.01).substr(0, 4));
+      this.canvas.renderAll();
+    } else {
+      return alert("select object");
+    }
+  };
+
+<Input
+  id="transparent"
+  type="range"
+  value={this.state.transparent}
+  onChange={this.onChangeTransparent}
+  displayText="Transparent"
+  rangeMin={0}
+  rangeMax={100}
+  // rangeStep={10}
+/>
+
+
+  onClickBold = e => {
+    if (this.state.canvas.getActiveObject().fontWeight === "normal") {
+      this.state.canvas.getActiveObject().set("fontWeight", "bold");
+      this.state.canvas.renderAll();
+    } else if (this.state.canvas.getActiveObject().fontWeight === "bold") {
+      this.state.canvas.getActiveObject().set("fontWeight", "normal");
+      this.state.canvas.renderAll();
+    }
+  };
+  onClickUnderLine = e => {
+    if (!this.state.canvas.getActiveObject().underline) {
+      this.state.canvas.getActiveObject().set("underline", true);
+      this.state.canvas.renderAll();
+    } else {
+      this.state.canvas.getActiveObject().set("underline", false);
+      this.state.canvas.renderAll();
+    }
+
+  };
+  
+  {/* <button onClick={this.onClickUnderLine}>U</button> */}
+  
+  */
