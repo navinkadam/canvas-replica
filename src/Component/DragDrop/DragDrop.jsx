@@ -27,10 +27,10 @@ import {
 fabric.Object.prototype.set({
   borderColor: "#53c5bf",
   cornerColor: "#acdab5b8",
-  cornerSize: 10,
+  cornerSize: 18,
   padding: 1,
   hasBorders: true,
-  rotatingPointOffset: 20,
+  rotatingPointOffset: 30,
   cornerStyle: "circle"
   // transparentCorners: true
 });
@@ -189,148 +189,144 @@ class DragDrop extends PureComponent {
   }
   render() {
     return (
-      <div>
-        <div className="container">
-          <div className="left">
-            <Images imagesList={this.state.imgSrc} />
-          </div>
+      <div className="container">
+        <div className="left">
+          <Images imagesList={this.state.imgSrc} />
+        </div>
 
-          <div className="right">
-            <div>
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    padding: "20px"
-                  }}
-                >
-                  <Input
-                    id="backGroundColor"
-                    type="color"
-                    value={this.state.selectedBackGroundColor}
-                    onChange={this.onChangeBackGroundColor}
-                    displayText="Background Color"
-                  />
-                  <DrawText canvas={this.state.canvas} />
-                  <Shapes canvas={this.state.canvas} />
-                  <div style={{ display: "flex" }}>
-                    <MultipleSelection canvas={this.state.canvas} />
-                    <div>
-                      <button
-                        onClick={e =>
-                          this.state.canvas.discardActiveObject() &&
-                          this.state.canvas.requestRenderAll()
-                        }
-                      >
-                        Deselect
-                      </button>
-                    </div>
-                  </div>
-                  <Download canvas={this.state.canvas} />
-                  <div
-                    style={{
-                      display: "flex"
-                    }}
-                    className={
-                      !this.state.copyPasteVisibility ? "visibility" : ""
+        <div className="right">
+          <div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                padding: "20px"
+              }}
+            >
+              <Input
+                id="backGroundColor"
+                type="color"
+                value={this.state.selectedBackGroundColor}
+                onChange={this.onChangeBackGroundColor}
+                displayText="Background Color"
+              />
+              <DrawText canvas={this.state.canvas} />
+              <Shapes canvas={this.state.canvas} />
+              <div style={{ display: "flex" }}>
+                <MultipleSelection canvas={this.state.canvas} />
+                <div>
+                  <button
+                    onClick={e =>
+                      this.state.canvas.discardActiveObject() &&
+                      this.state.canvas.requestRenderAll()
                     }
                   >
-                    <div style={{ display: "flex" }}>
-                      <Group canvas={this.state.canvas} />
-                      <Ungroup canvas={this.state.canvas} />
-                    </div>
-                    <div style={{ display: "flex" }}>
-                      <Backward canvas={this.state.canvas} />
-                      <Forward canvas={this.state.canvas} />
-                    </div>
-                    <RangeBarReact
-                      canvas={this.state.canvas}
-                      id="transparent"
-                      displayText="Transparent"
-                      rangeMin={0}
-                      rangeMax={100}
-                      rangeStep={10}
-                      value={100}
-                    />
-                    <CopyPaste canvas={this.state.canvas} />
-                  </div>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-evenly",
-                    padding: "20px"
-                  }}
-                  className={!this.state.textVisibility ? "visibility" : ""}
-                >
-                  <FontFamily
-                    selectedFontFamily={this.state.selectedFontFamily}
-                    fonts={this.state.fontFamilys}
-                    onChangeFontFamily={this.onChangeFontFamily}
-                  />
-                  <TextAlign
-                    selectedTextAlign={this.state.selectedTextAlign}
-                    onChangeTextAlign={this.onChangeTextAlign}
-                    aligns={this.state.textAligns}
-                  />
-                  <Input
-                    id="fontColor"
-                    type="color"
-                    value={this.state.selectedColor}
-                    onChange={this.onChangeColor}
-                    displayText="Font Color"
-                  />
-                  <Input
-                    id="fontSize"
-                    type="text"
-                    value={this.state.fontSize}
-                    onChange={this.onChangeFontSize}
-                    displayText="Font Size"
-                  />
-                  <RangeBarReact
-                    canvas={this.state.canvas}
-                    id="lineHeight"
-                    displayText="Line Height"
-                    rangeMin={0.5}
-                    rangeMax={2.5}
-                    rangeStep={0.2}
-                    value={1.16}
-                  />
-
-                  <RangeBarReact
-                    canvas={this.state.canvas}
-                    id="letterSpacing"
-                    displayText="Letter Spacing"
-                    rangeMin={-200}
-                    rangeMax={800}
-                    rangeStep={1}
-                    value={10}
-                  />
-                  <ButtonReact
-                    id="bold"
-                    canvas={this.state.canvas}
-                    displayText={"B"}
-                  />
-                  <ButtonReact
-                    id="underLine"
-                    canvas={this.state.canvas}
-                    displayText={"U"}
-                  />
-                  <ButtonReact
-                    id="italic"
-                    canvas={this.state.canvas}
-                    displayText={"I"}
-                  />
+                    Deselect
+                  </button>
                 </div>
               </div>
-              <canvas
-                ref={this.canvasRef}
-                height="500%"
-                width="700%"
-                className="canvas"
+              <Download canvas={this.state.canvas} />
+              <div
+                style={{
+                  display: "flex"
+                }}
+                className={!this.state.copyPasteVisibility ? "visibility" : ""}
+              >
+                <div style={{ display: "flex" }}>
+                  <Group canvas={this.state.canvas} />
+                  <Ungroup canvas={this.state.canvas} />
+                </div>
+                <div style={{ display: "flex" }}>
+                  <Backward canvas={this.state.canvas} />
+                  <Forward canvas={this.state.canvas} />
+                </div>
+                <RangeBarReact
+                  canvas={this.state.canvas}
+                  id="transparent"
+                  displayText="Transparent"
+                  rangeMin={0}
+                  rangeMax={100}
+                  rangeStep={10}
+                  value={100}
+                />
+                <CopyPaste canvas={this.state.canvas} />
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                padding: "20px"
+              }}
+              className={!this.state.textVisibility ? "visibility" : ""}
+            >
+              <FontFamily
+                selectedFontFamily={this.state.selectedFontFamily}
+                fonts={this.state.fontFamilys}
+                onChangeFontFamily={this.onChangeFontFamily}
+              />
+              <TextAlign
+                selectedTextAlign={this.state.selectedTextAlign}
+                onChangeTextAlign={this.onChangeTextAlign}
+                aligns={this.state.textAligns}
+              />
+              <Input
+                id="fontColor"
+                type="color"
+                value={this.state.selectedColor}
+                onChange={this.onChangeColor}
+                displayText="Font Color"
+              />
+              <Input
+                id="fontSize"
+                type="text"
+                value={this.state.fontSize}
+                onChange={this.onChangeFontSize}
+                displayText="Font Size"
+              />
+              <RangeBarReact
+                canvas={this.state.canvas}
+                id="lineHeight"
+                displayText="Line Height"
+                rangeMin={0.5}
+                rangeMax={2.5}
+                rangeStep={0.2}
+                value={1.16}
+              />
+
+              <RangeBarReact
+                canvas={this.state.canvas}
+                id="letterSpacing"
+                displayText="Letter Spacing"
+                rangeMin={-200}
+                rangeMax={800}
+                rangeStep={1}
+                value={10}
+              />
+              <ButtonReact
+                id="bold"
+                canvas={this.state.canvas}
+                displayText={"B"}
+              />
+              <ButtonReact
+                id="underLine"
+                canvas={this.state.canvas}
+                displayText={"U"}
+              />
+              <ButtonReact
+                id="italic"
+                canvas={this.state.canvas}
+                displayText={"I"}
               />
             </div>
+          </div>
+          <div>
+            <canvas
+              ref={this.canvasRef}
+              height="500%"
+              width="700%"
+              className="canvas"
+            />
           </div>
         </div>
       </div>
